@@ -19,10 +19,6 @@ public class SuffixTree
             input[i] = inpu.charAt(i);
         }
         input[glen-1] = UNIQUE_CHAR;
-        /*for(char i : input)
-        {
-        	System.out.println(i);
-        }*/
     }
 
     private SuffixEdge SelectEdge() //retrieves correct child as per activeEdge //activelength != 0, gives correct edge just by using activedge
@@ -62,28 +58,10 @@ public class SuffixTree
     			SetIndexUsingDFS(edge, 0 , size );
     		}
     	}
-    	ArrayList<ArrayList<Character>> lis = new ArrayList<ArrayList<Character>>();
-    	Map<Integer,ArrayList<ArrayList<Character>>> map = new HashMap<Integer,ArrayList<ArrayList<Character>>>();
-    	PrintSuffixes(root , lis, map);
-    	//System.out.println(map);
-    	ArrayList<Integer> sortedk = new ArrayList<Integer>(map.keySet());
-    	//System.out.println(sortedk);
-    	//Collections.sort(sortedk);
-    	/*for(Integer iss : sortedk)
-    	{
-    		System.out.print(iss);
-    		System.out.print(" ");
-    		ArrayList<ArrayList<Character>> m = map.get(iss);
-    		for(ArrayList<Character> i : m)
-    		{
-    			for(Character j : i)
-    			{
-    				System.out.print(j);
-    			}
-    		}
-    		System.out.println(" ");
-
-    	}*/
+    	//ArrayList<ArrayList<Character>> lis = new ArrayList<ArrayList<Character>>();
+    	//Map<Integer,ArrayList<ArrayList<Character>>> map = new HashMap<Integer,ArrayList<ArrayList<Character>>>();
+    	//PrintSuffixes(root , lis, map);
+    	//ArrayList<Integer> sortedk = new ArrayList<Integer>(map.keySet());
 
 
     }
@@ -109,8 +87,6 @@ public class SuffixTree
     	active.ActiveNode = edge.son ;
     	active.ActiveLength = active.ActiveLength - NoOfElem(edge);
     	active.ActiveEdge = active.ActiveEdge + NoOfElem(edge);
-    	System.out.println("hiii");
-    	System.out.println(active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
     	return NextPoint(i);
     	
     }
@@ -157,10 +133,9 @@ public class SuffixTree
     public void Phase(int i)
     {
     	remaining++;
-    	System.out.println("remaining = " + remaining);
+
     	end.end++;
-    	//System.out.println(end.end);
-    	System.out.println(" end = " + end.end);
+
     	SuffixNode lastNodebuilt = new SuffixNode();
     	lastNodebuilt = null ;
     	SuffixNode tempnode = new SuffixNode();
@@ -169,39 +144,19 @@ public class SuffixTree
 
     	while (remaining>0)
     	{	
-    		System.out.println(lastNodebuilt);
     		tempedge = active.ActiveEdge;
     		templen = active.ActiveLength;
     		tempnode = active.ActiveNode;
-    		System.out.println(active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
     		if(active.ActiveLength == 0) // If activelength is 0 activenode is always root
     		{	
-    			//System.out.println('H');
     			if(SelectEdge(i)!=null) // already existence  //Rule3
     			{
     				active.ActiveEdge = SelectEdge(i).start;
     				active.ActiveLength++;
-    				//System.out.println('I');
-    				System.out.println("remaining = " + remaining);
-    				//System.out.println(active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
-    				//System.out.println(lastNodebuilt);
-    				//System.out.println("----" + active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
-    				/*try 
-    				{
-    					System.out.println(root.child['b'-' '].son.SuffixLink);
-    				}
-    				catch(Exception e)
-    				{
-    					System.out.println("Sorry");
-    				}*/
-    				System.out.println(lastNodebuilt);
-    				System.out.println("----" + active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
     				break;
     			}
     			else // Rule2 // If activelength is 0 and new edge is created at root no need to update active field
     			{	
-    				//System.out.println('J');
-    				//System.out.println(input[i]);
     				active.ActiveNode.child[input[i]-' '] = new SuffixEdge(i,end);
     				active.ActiveNode.child[input[i]-' '].parent = active.ActiveNode;
     				SuffixNode temp = active.ActiveNode;
@@ -230,12 +185,6 @@ public class SuffixTree
     			try
     			{
     				Character ch = NextPoint(i);  // what is the charater after current activepoint
-    				System.out.println(ch);
-    				//System.out.println(input[i]);
-    				//System.out.println(ch);
-    				//System.out.println(i);
-    				//System.out.println(input[i]);
-    				//System.out.println(active.ActiveLength);
     				if(ch==null)
     				{	
     					SuffixEdge edge = new SuffixEdge(i,this.end);
@@ -243,9 +192,9 @@ public class SuffixTree
     					edge.parent = active.ActiveNode;
     					remaining--;
     					SuffixNode temp = new SuffixNode();
-    					System.out.println(active.ActiveNode);
+    					//System.out.println(active.ActiveNode);
     					temp = active.ActiveNode;
-    					System.out.println(lastNodebuilt);
+    					//System.out.println(lastNodebuilt);
     					
     					if(lastNodebuilt != null && (lastNodebuilt.SuffixLink == root || lastNodebuilt.SuffixLink == null) )
     					{
@@ -274,51 +223,19 @@ public class SuffixTree
 
     					if(ch == input[i]) // nextPoint is same as current phase // go to that point and update your active class
     					{
-    						/*if( lastNodebuilt != null && (lastNodebuilt == root || lastNodebuilt.SuffixLink == null)) // in the same phase is thier another created node 
-    						{
-    							lastNodebuilt.SuffixLink = SelectEdge().parent;
-    						}*/
     						walkdown(i);
-    						try{
-    							if(lastNodebuilt.SuffixLink == null)
-    							{
-    								System.out.println("Dashdash2");
-    							}	
-    						}
-    						catch(Exception e)
-    						{
-    							System.out.println("Sorry");
-    						}	
+    							
     						if( lastNodebuilt != null && (lastNodebuilt.SuffixLink == root || lastNodebuilt.SuffixLink == null)) // in the same phase is thier another created node 
     						{	
-    							System.out.println("Dashdash");
     							lastNodebuilt.SuffixLink = active.ActiveNode;
     						}
-    						//System.out.println(active.ActiveLength); // Rule3 extension wise update to active class
-    						System.out.println("Jackass");
-    						System.out.println("remaining = " + remaining);
-    						//System.out.println(lastNodebuilt);
-    						//System.out.println("----" + active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
-    						/*try 
-    						{
-    							System.out.println(root.child['b'-' '].son.SuffixLink);
-    						}
-    						catch(Exception e)
-    						{
-    							System.out.println("Sorry");
-    						}*/
-    						System.out.println(lastNodebuilt);
-    						System.out.println("----" + active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
     						break;
     					}
     			
     				
     					else // NEXT CHARACTER IS NOT SAME AS PHASE CHARACTER SO RULE 2 EXTENSION AND UPDATE TO ACTIVE POINT
     					{	
-    						//System.out.println("hiii");
     						SuffixEdge edge = SelectEdge();
-    						//System.out.println(edge.start);
-    						//System.out.println(remaining);
     						SuffixNode par = edge.parent;
     						int oldstart = edge.start;
     						int oldend = edge.end.end;
@@ -345,12 +262,6 @@ public class SuffixTree
     						{    							
     							lastNodebuilt.SuffixLink = root;
     						}
-    						//System.out.println(lastNodebuilt);
-
-    						/*if(lastNodebuilt != null && lastNodebuilt.SuffixLink == null )
-    						{
-    							lastNodebuilt.SuffixLink = temp;
-    						}*/
 
     						if(active.ActiveNode != root)
     						{
@@ -368,7 +279,6 @@ public class SuffixTree
     			}
     			catch(EndOfPathException e)
     			{	
-    				//System.out.println("Hi");
     				SuffixEdge edge = SelectEdge();
     				SuffixNode temp = edge.parent;
     				if(lastNodebuilt != null)
@@ -388,22 +298,10 @@ public class SuffixTree
     				remaining--;
     			}		
     		}
-    		/*try 
-    		{
-    			System.out.println(root.child['b'-' '].son.SuffixLink);
-    		}
-    		catch(Exception e)
-    		{
-    			System.out.println("Sorry");
-    		}*/
-    		System.out.println(lastNodebuilt);
-    		System.out.println("----" + active.ActiveNode + " " + active.ActiveLength + " " + active.ActiveEdge);
     	}
-    	System.out.println("remaining = " + remaining);
-    	System.out.println("--------------------");
     }
 
-    public void  PrintSuffixes(SuffixNode root, ArrayList<ArrayList<Character>> arr , Map<Integer,ArrayList<ArrayList<Character>>> map)
+    /*public void  PrintSuffixes(SuffixNode root, ArrayList<ArrayList<Character>> arr , Map<Integer,ArrayList<ArrayList<Character>>> map)
     {	
     	for(SuffixEdge edge : root.child)
     	{	
@@ -430,46 +328,20 @@ public class SuffixTree
     				temp.add(input[i]);
     			}
     			arr.add(temp);
-    			//System.out.println(arr);
-    			/*for(ArrayList<Character> i : arr)
-    			{
-    				for(Character j : i)
-    				{
-    					System.out.print(j);
-    				}
-    			}*/
+    			
     			System.out.println(arr);
 
-    			//map.put(edge.index, arr);
-    			//System.out.println(active.ActiveLength + active.ActiveEdge);
-    			//System.out.println(edge.index);
     			arr.remove(arr.size()-1);
-    			//System.out.println(arr);
     		}
     	}
-    }
+    }*/
 
-    public static void main(String args[])
-    {
-    	SuffixTree dash = new SuffixTree("There is no way I would ever have predicted the existence of a band called Porridge");
+    /*public static void main(String args[])
+    {	
+    	String a = "Coronaviruses enter host cells by first, binding to a cell surface receptor for viral attachment. Subsequently they enter the endosomes and eventually fuse viral and lysosomal membranes. The surface-anchored spike protein mediate the virus entry. SARS-CoV-2 spike binds to its receptor human ACE2 through its receptor-binding domain and is activated by human proteases. The respiratory track contains lots of ACE2 receptors making it the primary colony for the virus. Its cell entry is preactivated by furin which reduces its dependence on cell proteases. Proteases are capable of hydrolyzing peptide bonds in proteins. The host cell serine protease TMPRSS2 primes the S protein of SARS-CoV-2 for entry. The S protein has two domains (parts) in it the S1 and the S2 and both of them have specified functions that work in the viral entry to the host cell. The S1 domain functions to cling to the typical receptor, while the S2 domain helps in fusion with the membrane of the host cell. Now, to be effective, the S protein needs to be cleaved for the separation of S1 and S2 domains. The TMPRSS2 protein present in the host cell (human cell) does this cleaving. This makes the TMPRSS2 protein an essential ingredient in the viral entry to the host cell. Once inside the cell, viral polyproteins are synthesized that encode for the replicase-transcriptase complex. The virus then synthesizes RNA via its RNA-dependent RNA polymerase. Structural proteins are synthesized leading to completion of assembly and release of viral particles.";
+    	SuffixTree dash = new SuffixTree("Coronaviruses ó enter host cells by first, binding to a cell surface receptor for viral attachment. Subsequently they enter the endosomes and eventually fuse viral and lysosomal membranes. The surface-anchored spike protein mediate the virus entry. SARS-CoV-2 spike binds to its receptor human ACE2 through its receptor-binding domain and is activated by human proteases. The respiratory track contains lots of ACE2 receptors making it the primary colony for the virus. Its cell entry is preactivated by furin which reduces its dependence on cell proteases. Proteases are capable of hydrolyzing peptide bonds in proteins. The host cell serine protease TMPRSS2 primes the S protein of SARS-CoV-2 for entry. The S protein has two domains (parts) in it the S1 and the S2 and both of them have specified functions that work in the viral entry to the host cell. The S1 domain functions to cling to the typical receptor, while the S2 domain helps in fusion with the membrane of the host cell. Now, to be effective, the S protein needs to be cleaved for the separation of S1 and S2 domains. The TMPRSS2 protein present in the host cell (human cell) does this cleaving. This makes the TMPRSS2 protein an essential ingredient in the viral entry to the host cell. Once inside the cell, viral polyproteins are synthesized that encode for the replicase-transcriptase complex. The virus then synthesizes RNA via its RNA-dependent RNA polymerase. Structural proteins are synthesized leading to completion of assembly and release of viral particles.");
     	dash.build();
-    	/*SuffixNode node = dash.root.child['e' - ' '].son;
-    	int i = 0;
-    	for(SuffixEdge ed : node.child)
-    	{
-    		if(ed!=null)
-    		{
-    			i+=1;
-    			System.out.println(ed.start);
-    		}
-    	}
-    	System.out.println(i);*/
-    	//System.out.println(dash.root);
-    	//System.out.println(dash.root.child['n' - ' '].son);
-    	//System.out.println(dash.root.child['a' - ' '].son);
-    	//System.out.println(dash.root.child['n' - ' '].son.SuffixLink);
-    	//System.out.println(dash.root.child['A' - ' '].son.child['A'-' '].son.SuffixLink);
-    }
+    }*/
 
 
 }

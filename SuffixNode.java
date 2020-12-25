@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SuffixNode
 {
-	SuffixEdge[] child = new SuffixEdge[95];
+	SuffixEdge[] child = new SuffixEdge[256];
 	//ArrayList<SuffixEdge> child = new ArrayList<SuffixEdge>(TOTAL);
 	SuffixNode SuffixLink ;
 
